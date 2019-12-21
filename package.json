@@ -12,8 +12,10 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.1.0",
     "js-yaml": "3.13.1",
-    "vue": "^2.5.2",
+    "vue": "^2.6.11",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
