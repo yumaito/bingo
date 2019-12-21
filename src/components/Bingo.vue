@@ -3,8 +3,14 @@
     <h1>BINGO</h1>
     <b-button
       variant="primary"
+      size="lg"
       @click='draw'>
       引く
+    </b-button>
+    <b-button
+      variant='warning'
+      @click='initData'>
+      リセットする
     </b-button>
     <div class='mt-4'>
       <b-card-group deck>
@@ -48,6 +54,7 @@ export default {
         })
       }
       this.numbers = result
+      this.justOpenedNumber = 0
     },
     draw () {
       const candidates = this.numbers.filter(n => !n.isOpened)
