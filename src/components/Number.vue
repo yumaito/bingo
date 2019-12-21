@@ -1,5 +1,9 @@
 <template>
-  <b-card bg-variant="light" class="text-center">
+  <b-card
+    bg-variant="light"
+    style="min-width: 5rem; max-width: 5rem;"
+    class="text-center"
+    >
     {{ number }}
   </b-card>
 </template>

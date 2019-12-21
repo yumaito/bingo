@@ -4,19 +4,16 @@
     <b-button variant="primary">
       引く
     </b-button>
-    <b-container>
-      <b-row>
-        <b-col
+    <div class='mt-4'>
+      <b-card-group deck>
+        <number
           v-for='n in numbers'
           :key="n.number"
-          cols='1'>
-          <number
-            :number='n.number'
-            :is-opened='n.isOpened'
-            :is-just-opened='n.isJustOpened'/>
-        </b-col>
-      </b-row>
-    </b-container>
+          :number='n.number'
+          :is-opened='n.isOpened'
+          :is-just-opened='n.isJustOpened'/>
+      </b-card-group>
+    </div>
   </div>
 </template>
 
