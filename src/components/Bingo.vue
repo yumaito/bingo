@@ -29,7 +29,10 @@
       :title='drawnCount + "回目"'
       @hidden='hidden'
       >
-      <h2><strong>{{ drawnNumber }}</strong> が出ました!</h2>
+      <h2 class='text-center'>{{ drawnNumber }}</h2>
+      <b-progress :max='maxValue'>
+        <b-progress-bar :value='drawnCount' />
+      </b-progress>
     </b-modal>
   </div>
 </template>
