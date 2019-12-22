@@ -15,7 +15,7 @@
     </b-button>
     <b-button
       variant='danger'
-      @click='initData'>
+      v-b-modal.reset-modal>
       リセットする
     </b-button>
     <div class='mt-4'>
@@ -59,6 +59,13 @@
         responsive
         striped>
       </b-table>
+    </b-modal>
+    <b-modal
+      header-bg-variant="danger"
+      id='reset-modal'
+      @ok="initData"
+    >
+      リセットします
     </b-modal>
   </div>
 </template>
