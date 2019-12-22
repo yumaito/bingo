@@ -49,6 +49,7 @@
     </b-modal>
     <b-modal
       ok-only
+      scrollable
       id="history-modal"
     >
       <b-table
