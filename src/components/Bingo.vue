@@ -8,7 +8,13 @@
       引く
     </b-button>
     <b-button
-      variant='warning'
+      variant="success"
+      v-b-modal.history-modal
+    >
+      履歴を見る
+    </b-button>
+    <b-button
+      variant='danger'
       @click='initData'>
       リセットする
     </b-button>
@@ -27,12 +33,31 @@
       ok-only
       ref='number-modal'
       :title='drawnCount + "回目"'
-      @hidden='hidden'
+      @hidden='updateDrawnNumber'
       >
       <h2 class='text-center'>{{ drawnNumber }}</h2>
       <b-progress :max='maxValue'>
         <b-progress-bar :value='drawnCount' />
       </b-progress>
+    </b-modal>
+    <b-modal
+      centered
+      ok-only
+      ref='finish-modal'
+    >
+      全て引き終わりました
+    </b-modal>
+    <b-modal
+      ok-only
+      id="history-modal"
+    >
+      <b-table
+        :fields="drawnNumberFields"
+        :items="drawns"
+        small
+        responsive
+        striped>
+      </b-table>
     </b-modal>
   </div>
 </template>
@@ -52,11 +77,32 @@ export default {
       justOpenedNumber: 0,
       drawnNumber: 0,
       drawnCount: 1,
-      numbers: []
+      numbers: [],
+      drawnNumbers: [],
+      drawnNumberFields: [
+        {
+          key: 'index',
+          label: ''
+        },
+        {
+          key: 'number',
+          label: ''
+        }
+      ]
     }
   },
   created () {
     this.initData()
+  },
+  computed: {
+    drawns () {
+      return this.drawnNumbers.map((dn, i) => {
+        return {
+          index: `${i + 1} 回目`,
+          number: dn
+        }
+      })
+    }
   },
   methods: {
     initData () {
@@ -70,10 +116,12 @@ export default {
       this.numbers = result
       this.drawnCount = 0
       this.justOpenedNumber = 0
+      this.drawnNumbers = []
     },
     draw () {
       const candidates = this.numbers.filter(n => !n.isOpened)
       if (candidates.length === 0) {
+        this.$refs['finish-modal'].show()
         return
       }
       const drawn = _.sample(candidates)
@@ -81,13 +129,14 @@ export default {
       this.drawnNumber = drawn.number
       this.drawnCount++
     },
-    hidden (e) {
+    updateDrawnNumber (e) {
       for (const n of this.numbers) {
         if (n.number === this.drawnNumber) {
           n.isOpened = true
         }
       }
       this.justOpenedNumber = this.drawnNumber
+      this.drawnNumbers.push(this.drawnNumber)
     }
   }
 }
