@@ -22,6 +22,15 @@
           :just-opened-number='justOpenedNumber'/>
       </b-card-group>
     </div>
+    <b-modal
+      centered
+      ok-only
+      ref='number-modal'
+      :title='drawnCount + "回目"'
+      @hidden='hidden'
+      >
+      <h2><strong>{{ drawnNumber }}</strong> が出ました!</h2>
+    </b-modal>
   </div>
 </template>
 
@@ -38,6 +47,8 @@ export default {
       minValue: 1,
       maxValue: 75,
       justOpenedNumber: 0,
+      drawnNumber: 0,
+      drawnCount: 1,
       numbers: []
     }
   },
@@ -54,6 +65,7 @@ export default {
         })
       }
       this.numbers = result
+      this.drawnCount = 0
       this.justOpenedNumber = 0
     },
     draw () {
@@ -62,12 +74,17 @@ export default {
         return
       }
       const drawn = _.sample(candidates)
-      this.numbers.filter(n => {
-        if (n.number === drawn.number) {
+      this.$refs['number-modal'].show()
+      this.drawnNumber = drawn.number
+      this.drawnCount++
+    },
+    hidden (e) {
+      for (const n of this.numbers) {
+        if (n.number === this.drawnNumber) {
           n.isOpened = true
         }
-      })
-      this.justOpenedNumber = drawn.number
+      }
+      this.justOpenedNumber = this.drawnNumber
     }
   }
 }
